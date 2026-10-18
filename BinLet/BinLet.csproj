@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.22000.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>BinLet</RootNamespace>
+    <Product>Binlet</Product>
+    <Version>1.0.0</Version>
+    <Description>Minimal Windows Recycle Bin tray utility</Description>
+    <ApplicationIcon>Assets\bin-empty.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- WPF's Fluent theme is still flagged experimental (WPF0001). -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+    <!-- Only applies to "dotnet publish": keep single-file output truly single. -->
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\bin-empty.ico" LogicalName="Assets.bin-empty.ico" />
+    <EmbeddedResource Include="Assets\bin-full.ico" LogicalName="Assets.bin-full.ico" />
+  </ItemGroup>
+
+</Project>
