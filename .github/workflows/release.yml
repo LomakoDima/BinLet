@@ -24,12 +24,10 @@ jobs:
           $version = '${{ github.ref_name }}'.TrimStart('v')
           dotnet publish BinLet/BinLet.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:Version=$version -o out
 
-      - name: Package
-        shell: pwsh
-        run: Compress-Archive -Path out/BinLet.exe -DestinationPath Binlet-${{ github.ref_name }}-win-x64.zip
-
       - name: Create release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create '${{ github.ref_name }}' 'Binlet-${{ github.ref_name }}-win-x64.zip' --title '${{ github.ref_name }}' --generate-notes
+        run: |
+          Move-Item out/BinLet.exe Binlet-win-x64.exe
+          gh release create '${{ github.ref_name }}' Binlet-win-x64.exe --title '${{ github.ref_name }}' --generate-notes
