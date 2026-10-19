@@ -43,7 +43,8 @@ internal sealed class TrayController : IDisposable
         _openItem.Click += (_, _) => OpenRecycleBin();
         _emptyItem = new Wpf.MenuItem { Header = "Empty Recycle Bin" };
         _emptyItem.Click += async (_, _) => await EmptyRecycleBinAsync();
-        _startupItem = new Wpf.MenuItem { Header = "Start with Windows" };
+        // IsCheckable is what makes the Fluent theme draw the check mark.
+        _startupItem = new Wpf.MenuItem { Header = "Start with Windows", IsCheckable = true };
         _startupItem.Click += (_, _) => ToggleStartup();
         var exitItem = new Wpf.MenuItem { Header = "Exit" };
         exitItem.Click += (_, _) => System.Windows.Application.Current.Shutdown();
@@ -188,13 +189,20 @@ internal sealed class TrayController : IDisposable
 
     private void ToggleStartup()
     {
+        // A checkable item has already flipped IsChecked by the time Click is raised.
+        bool enable = _startupItem.IsChecked;
         try
         {
-            StartupRegistration.SetEnabled(!StartupRegistration.IsEnabled());
+            StartupRegistration.SetEnabled(enable);
         }
         catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException or InvalidOperationException)
         {
             Dialogs.ShowError("Couldn't change the startup setting", ex.Message);
+        }
+        finally
+        {
+            // Show what the registry actually says, never what we hoped for.
+            _startupItem.IsChecked = StartupRegistration.IsEnabled();
         }
     }
 
