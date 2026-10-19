@@ -24,6 +24,10 @@ jobs:
           $version = '${{ github.ref_name }}'.TrimStart('v')
           dotnet publish BinLet/BinLet.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:Version=$version -o out
 
+      # Code signing goes here, between Publish and Create release: sign out/BinLet.exe, then
+      # continue. Not wired up yet: it needs an approved SignPath Foundation project (or another
+      # signing service) and its secrets. Follow SignPath's GitHub integration docs when ready.
+
       - name: Create release
         shell: pwsh
         env:
