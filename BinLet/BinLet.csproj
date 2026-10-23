@@ -10,7 +10,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>BinLet</RootNamespace>
     <Product>Binlet</Product>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>Minimal Windows Recycle Bin tray utility</Description>
     <ApplicationIcon>Assets\bin-empty.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>

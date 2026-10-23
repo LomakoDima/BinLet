@@ -23,6 +23,11 @@ function New-RoundedRect([single]$x, [single]$y, [single]$w, [single]$h, [single
 function Draw-Bin([System.Drawing.Graphics]$g, [bool]$full) {
     # Coordinates are on a 32x32 grid (the graphics object is pre-scaled).
     $g.SmoothingMode = 'AntiAlias'
+    # Enlarge the artwork to fill the canvas (tray slots are tiny, so every pixel counts).
+    # Content spans y 2.1..28.7 and x 4..28 before scaling; 1.15x leaves ~1 unit margin.
+    $g.TranslateTransform(16, 16)
+    $g.ScaleTransform(1.15, 1.15)
+    $g.TranslateTransform(-16, -15.4)
     $stroke = New-Object System.Drawing.Pen($blue, 2.2)
     $stroke.LineJoin = 'Round'
     $solid = New-Object System.Drawing.SolidBrush($blue)
@@ -31,7 +36,7 @@ function Draw-Bin([System.Drawing.Graphics]$g, [bool]$full) {
         # Two sheets of paper poking out of the bin.
         $paper = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::White)
         $edge = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(255, 120, 135, 150), 1.1)
-        foreach ($s in @(@(11.5, 6.5, -16), @(20.5, 6.0, 13))) {
+        foreach ($s in @(@(11.5, 9.1, -16), @(20.5, 8.9, 13))) {
             $state = $g.Save()
             $g.TranslateTransform($s[0], $s[1])
             $g.RotateTransform($s[2])
